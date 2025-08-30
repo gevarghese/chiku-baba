@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html class="h-full">
+  <head>
+    <title>Modern Rails App</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+     <%= favicon_link_tag "favicon-#{Rails.env}.ico" %>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    
+    <%= stylesheet_link_tag :app,"data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    
+    <script>
+      // Dark mode initialization (before page load to prevent flash)
+      if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+      }
+    </script>
+  </head>
+
+  <body class="h-full bg-gray-50 dark:bg-gray-900 transition-colors duration-200" data-controller="theme">
+    <div class="min-h-full flex flex-col">
+      <%= render 'shared/header' %>
+      
+      <main class="flex-1">
+        <%= render 'shared/flash' %>
+        <div class="py-6">
+          <%= yield %>
+        </div>
+      </main>
+      
+      <%= render 'shared/footer' %>
+    </div>
+  </body>
+</html>

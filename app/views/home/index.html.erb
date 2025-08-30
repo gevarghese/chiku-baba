@@ -1,0 +1,155 @@
+<!-- app/views/home/index.html.erb -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <!-- Hero Section -->
+  <div class="text-center py-16">
+    <h1 class="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+      Modern Rails App
+      <span class="gradient-text block">with Hotwire & Tailwind</span>
+    </h1>
+    <p class="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
+      Experience blazing-fast, responsive web applications built with Rails 8, 
+      Hotwire/Turbo, Stimulus JS, and beautiful Tailwind CSS styling.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <%= link_to "#features", 
+          class: "btn-primary text-center", 
+          data: { turbo_smooth_scroll: true } do %>
+        Explore Features
+      <% end %>
+      <%= link_to "https://github.com", 
+          class: "btn-secondary text-center", 
+          target: "_blank" do %>
+        View on GitHub
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Flash Message Testing Section -->
+  <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-12">
+    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
+      Test Flash Messages & Interactions
+    </h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+      <%= link_to "Success", 
+          root_path(flash_test: 'success'), 
+          class: "bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors duration-200",
+          data: { turbo_method: :get } %>
+      <%= link_to "Error", 
+          root_path(flash_test: 'error'), 
+          class: "bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors duration-200",
+          data: { turbo_method: :get } %>
+      <%= link_to "Warning", 
+          root_path(flash_test: 'warning'), 
+          class: "bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors duration-200",
+          data: { turbo_method: :get } %>
+      <%= link_to "Info", 
+          root_path(flash_test: 'info'), 
+          class: "bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors duration-200",
+          data: { turbo_method: :get } %>
+    </div>
+    <div class="text-center">
+      <%= link_to "Test Redirect Flash", 
+          test_flash_path, 
+          class: "bg-purple-500 hover:bg-purple-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200",
+          data: { turbo_method: :get } %>
+    </div>
+  </div>
+
+  <!-- Features Section -->
+  <div id="features" class="py-16">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+        Modern Features
+      </h2>
+      <p class="text-lg text-gray-600 dark:text-gray-300">
+        Built with the latest technologies for optimal performance
+      </p>
+    </div>
+    
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Dark Mode -->
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+        <div class="w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+          Dark Mode Support
+        </h3>
+        <p class="text-gray-600 dark:text-gray-300">
+          Automatic dark mode detection with manual toggle. Smooth transitions and perfect contrast ratios.
+        </p>
+      </div>
+
+      <!-- Mobile Responsive -->
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+        <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-teal-600 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+          Mobile First Design
+        </h3>
+        <p class="text-gray-600 dark:text-gray-300">
+          Fully responsive with hamburger menu, touch-friendly interactions, and optimal mobile performance.
+        </p>
+      </div>
+
+      <!-- Hotwire/Turbo -->
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+        <div class="w-12 h-12 bg-gradient-to-r from-red-500 to-pink-600 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+          Hotwire/Turbo
+        </h3>
+        <p class="text-gray-600 dark:text-gray-300">
+          Lightning-fast page transitions, real-time updates, and SPA-like experience without the complexity.
+        </p>
+      </div>
+
+      <!-- Stimulus JS -->
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+        <div class="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+          Stimulus Controllers
+        </h3>
+        <p class="text-gray-600 dark:text-gray-300">
+          Clean, organized JavaScript with Stimulus controllers for interactive behaviors and component logic.
+        </p>
+      </div>
+
+      <!-- Tailwind CSS -->
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+        <div class="w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+          Tailwind CSS
+        </h3>
+        <p class="text-gray-600 dark:text-gray-300">
+          Utility-first styling with custom animations, responsive design, and consistent design system.
+        </p>
+      </div>
+
+      <!-- Flash Messages -->
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+        <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+          Smart Notifications
+        </h3>
+        <p class="text-gray-600 dark:text
