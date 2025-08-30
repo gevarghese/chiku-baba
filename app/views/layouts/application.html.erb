@@ -18,6 +18,16 @@
         document.documentElement.classList.remove('dark')
       }
     </script>
+     <style>
+        /* Custom styles for the transition and colors */
+        body {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .dark body {
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+    </style>
   </head>
 
   <body class="h-full bg-gray-50 dark:bg-gray-900 transition-colors duration-200" data-controller="theme">
