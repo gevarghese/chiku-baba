@@ -11,14 +11,10 @@
       Hotwire/Turbo, Stimulus JS, and beautiful Tailwind CSS styling.
     </p>
     <div class="flex flex-col sm:flex-row gap-4 justify-center">
-      <%= link_to "#features", 
-          class: "btn-primary text-center", 
-          data: { turbo_smooth_scroll: true } do %>
+      <%= link_to "#features", class: "btn-primary text-center", data: { turbo_smooth_scroll: true } do %>
         Explore Features
       <% end %>
-      <%= link_to "https://github.com", 
-          class: "btn-secondary text-center", 
-          target: "_blank" do %>
+      <%= link_to "https://github.com", class: "btn-secondary text-center", target: "_blank" do %>
         View on GitHub
       <% end %>
     </div>
@@ -30,28 +26,13 @@
       Test Flash Messages & Interactions
     </h2>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-      <%= link_to "Success", 
-          root_path(flash_test: 'success'), 
-          class: "bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors duration-200",
-          data: { turbo_method: :get } %>
-      <%= link_to "Error", 
-          root_path(flash_test: 'error'), 
-          class: "bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors duration-200",
-          data: { turbo_method: :get } %>
-      <%= link_to "Warning", 
-          root_path(flash_test: 'warning'), 
-          class: "bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors duration-200",
-          data: { turbo_method: :get } %>
-      <%= link_to "Info", 
-          root_path(flash_test: 'info'), 
-          class: "bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors duration-200",
-          data: { turbo_method: :get } %>
+      <%= link_to "Success", root_path(flash_test: 'success'), class: "bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors duration-200", data: { turbo_method: :get } %>
+      <%= link_to "Error", root_path(flash_test: 'error'), class: "bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors duration-200", data: { turbo_method: :get } %>
+      <%= link_to "Warning", root_path(flash_test: 'warning'), class: "bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors duration-200", data: { turbo_method: :get } %>
+      <%= link_to "Info", root_path(flash_test: 'info'), class: "bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-center font-medium transition-colors duration-200", data: { turbo_method: :get } %>
     </div>
     <div class="text-center">
-      <%= link_to "Test Redirect Flash", 
-          test_flash_path, 
-          class: "bg-purple-500 hover:bg-purple-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200",
-          data: { turbo_method: :get } %>
+      <%= link_to "Test Redirect Flash", test_flash_path, class: "bg-purple-500 hover:bg-purple-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200", data: { turbo_method: :get } %>
     </div>
   </div>
 
@@ -65,7 +46,7 @@
         Built with the latest technologies for optimal performance
       </p>
     </div>
-    
+
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
       <!-- Dark Mode -->
       <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
@@ -152,4 +133,10 @@
         <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
           Smart Notifications
         </h3>
-        <p class="text-gray-600 dark:text
+        <p class="text-gray-600 dark:text-gray-300">
+          Real-time updates, clean alert styles, and persistent flash messages with perfect dark mode support.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

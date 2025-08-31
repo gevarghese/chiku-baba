@@ -27,21 +27,38 @@
             background-color: #1a202c;
             color: #e2e8f0;
         }
+            #app-main {
+  padding-top: var(--header-height, 4rem);  /* fallback 64px */
+  padding-bottom: var(--footer-height, 8rem); /* fallback 128px */
+}
+
     </style>
   </head>
 
-  <body class="h-full bg-gray-50  transition-colors duration-200" data-controller="theme">
-    <div class="min-h-full flex flex-col">
-      <%= render 'shared/header' %>
-      
-      <main class="flex-1">
-        <%= render 'shared/flash' %>
-        <div class="py-6">
-          <%= yield %>
-        </div>
-      </main>
-      
-      <%= render 'shared/footer' %>
+<body 
+  class="h-screen bg-gray-50 transition-colors duration-200 flex flex-col" 
+  data-controller="theme layout"
+>
+  <!-- Fixed Header -->
+  <header id="app-header" class="fixed top-0 left-0 right-0 z-50">
+    <%= render 'shared/header' %>
+  </header>
+
+  <!-- Scrollable Main -->
+  <main id="app-main" 
+        class="flex-1 overflow-y-auto" 
+        data-layout-target="main">
+    <%= render 'shared/flash' %>
+    <div class="py-6">
+      <%= yield %>
     </div>
-  </body>
+  </main>
+
+  <!-- Fixed Footer -->
+  <footer id="app-footer" class="fixed bottom-0 left-0 right-0 z-50" data-layout-target="footer">
+    <%= render 'shared/footer' %>
+  </footer>
+</body>
+
+
 </html>
