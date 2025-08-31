@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
+  get "dashboard/index"
   get "home/index"
-  root "home#index"
+  root "dashboard#index"
   get 'test_flash', to: 'home#test_flash'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
