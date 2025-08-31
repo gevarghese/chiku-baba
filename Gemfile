@@ -69,3 +69,5 @@ gem "gemini-ai", "~> 4.3"
 gem "dotenv-rails", "~> 3.1"
 
 gem "rmagick", "~> 6.1"
+
+gem "pg", "~> 1.6"
