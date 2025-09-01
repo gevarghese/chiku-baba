@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  get "pages/faq"
+  get "pages/terms"
+  get "pages/cookies"
+  get "pages/privacy_policy"
+  get "pages/help_center"
   get "dashboard/index"
   get "home/index"
   root "dashboard#index"

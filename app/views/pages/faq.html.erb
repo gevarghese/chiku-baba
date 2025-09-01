@@ -1,0 +1,76 @@
+
+
+    <style>
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .accordion-item.active .accordion-content {
+            max-height: 500px; /* Adjust this value as needed to fit your content */
+        }
+    </style>
+
+
+
+    <main class="container mx-auto px-6 py-12">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-5xl font-extrabold text-gray-900 text-center mb-12">Frequently Asked Questions</h2>
+
+            <div class="space-y-6">
+                <div class="accordion-item bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                    <button class="accordion-button w-full flex justify-between items-center text-left text-xl font-semibold text-gray-800 focus:outline-none">
+                        <span>How do I get started with the tool?</span>
+                        <svg class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="accordion-content mt-4">
+                        <p class="text-gray-600">Getting started is simple! Just sign up for an account, and you'll be guided through a quick onboarding process. Our intuitive dashboard makes it easy to begin using all the features right away.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                    <button class="accordion-button w-full flex justify-between items-center text-left text-xl font-semibold text-gray-800 focus:outline-none">
+                        <span>Is there a free trial or version?</span>
+                        <svg class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="accordion-content mt-4">
+                        <p class="text-gray-600">Yes, we offer a free tier with core features. You can use it to test out the tool and upgrade to a premium plan at any time to unlock advanced functionalities and dedicated support.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                    <button class="accordion-button w-full flex justify-between items-center text-left text-xl font-semibold text-gray-800 focus:outline-none">
+                        <span>How can I contact support?</span>
+                        <svg class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="accordion-content mt-4">
+                        <p class="text-gray-600">Our support team is available 24/7. You can reach us through the "Contact Us" form on our website, or by emailing support@yourwebtool.com. We typically respond within 24 hours.</p>
+                    </div>
+                </div>
+
+                 <div class="accordion-item bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                    <button class="accordion-button w-full flex justify-between items-center text-left text-xl font-semibold text-gray-800 focus:outline-none">
+                        <span>Is my data secure?</span>
+                        <svg class="w-6 h-6 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="accordion-content mt-4">
+                        <p class="text-gray-600">We take data security very seriously. We use industry-standard encryption and security protocols to protect your information and regularly audit our systems to ensure they meet the highest security standards.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+
+    <script>
+        const accordionButtons = document.querySelectorAll('.accordion-button');
+        accordionButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const parent = button.parentElement;
+                parent.classList.toggle('active');
+                const svg = button.querySelector('svg');
+                svg.classList.toggle('rotate-180');
+            });
+        });
+    </script>
