@@ -89,7 +89,8 @@ Rails.application.configure do
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
 
-
+  # prodeuction make ssl enable
+  config.force_ssl = true
 
 
   # Set localhost to be used by links generated in mailer templates.
