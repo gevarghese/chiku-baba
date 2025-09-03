@@ -71,3 +71,11 @@ gem "dotenv-rails", "~> 3.1"
 gem "rmagick", "~> 6.1"
 
 gem "pg", "~> 1.6"
+
+gem "devise", "~> 4.9"
+
+gem "pundit", "~> 2.5"
+
+gem "letter_opener", "~> 1.10"
+
+gem "draper", "~> 4.0"

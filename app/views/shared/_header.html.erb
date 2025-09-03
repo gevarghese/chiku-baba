@@ -16,13 +16,10 @@
          <%= render 'shared/dark_mode_button' %>
 
         <!-- User Actions -->
-        <div class="flex items-center space-x-3">
-          <%= link_to "#", class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200" do %>
-            Sign In
-          <% end %>
-          <%= link_to "#", class: "border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 px-4 py-2 rounded-lg font-medium transition-colors duration-200" do %>
-            Sign Up
-          <% end %>
+        <!--<div class="flex items-center space-x-3">-->
+        <div class="w-full px-4 sm:px-6 lg:px-8 mx-auto">
+        <%= render 'shared/user_info_header' %>
+
         </div>
       </div>
 

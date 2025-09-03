@@ -1,9 +1,27 @@
 Rails.application.routes.draw do
-  get "pages/faq"
-  get "pages/terms"
-  get "pages/cookies"
-  get "pages/privacy_policy"
-  get "pages/help_center"
+  #devise_for :users
+  devise_for :users, controllers: {
+    sessions: 'users/sessions',
+    registrations: 'users/registrations',
+    passwords: 'users/passwords',
+    confirmations: 'users/confirmations'
+  }
+
+  # Admin routes
+  namespace :admin do
+    resources :users, only: [:index, :show, :edit, :update]
+  end
+  
+  # Regular user routes
+  resources :users, only: [:show, :edit, :update]
+
+  scope :pages, controller: :pages do
+    get 'faq', as: :faq_page
+    get 'terms', as: :terms_page
+    get 'cookies', as: :cookies_page
+    get 'privacy_policy', as: :privacy_policy_page
+    get 'help_center', as: :help_center_page
+  end
   get "dashboard/index"
   get "home/index"
   root "dashboard#index"

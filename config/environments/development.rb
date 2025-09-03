@@ -35,31 +35,32 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = false
 
   # Make template changes take effect immediately.
-  config.action_mailer.perform_caching = false
-
+  #config.action_mailer.perform_caching = false
+ 
   # Set localhost to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
+  config.action_mailer.default_url_options = { host: "192.168.56.107", port: 3000 }
+  #config.action_mailer.delivery_method = :letter_opener
  # Configure Action Mailer to use SMTP
-  config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.delivery_method = :smtp
   
-  # Set up SMTP settings for Gmail
-    config.action_mailer.smtp_settings = {
-      address:              'smtp.gmail.com',
-      port:                 587,
-      domain:               'gmail.com', # Or your custom domain if using Google Workspace
-      user_name:            ENV['GMAIL_USERNAME'], # Use environment variables for security
-      password:             ENV['GMAIL_APP_PASSWORD'], # Use an App Password, not your regular Gmail password
-      authentication:       'plain',
-      enable_starttls_auto: true
-    }
+  # # Set up SMTP settings for Zoho
+  # config.action_mailer.smtp_settings = {
+  #   address:              'smtp.zoho.com',
+  #   port:                 587,
+  #   domain:               ENV['ZOHO_DOMAIN'],
+  #   user_name:            ENV['ZOHO_EMAIL'],
+  #   password:             ENV['ZOHO_PASSWORD'],
+  #   authentication:       :login,
+  #   enable_starttls_auto: true
+  # }
     
-    config.action_mailer.perform_caching = false
+   
   
-  # Ensure emails are delivered
-  config.action_mailer.perform_deliveries = true
+  # # Ensure emails are delivered
+  # config.action_mailer.perform_deliveries = true
   
-  # Raise delivery errors for debugging
-  config.action_mailer.raise_delivery_errors = true
+  # # Raise delivery errors for debugging
+  # config.action_mailer.raise_delivery_errors = true
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 

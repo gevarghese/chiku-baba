@@ -3,6 +3,13 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["menu"]
 
+  connect() {
+    document.addEventListener('click', this.hide.bind(this))
+  }
+
+  disconnect() {
+    document.removeEventListener('click', this.hide.bind(this))
+  }
   toggle() {
     // toggle visibility
     this.menuTarget.classList.toggle("hidden")
@@ -11,7 +18,11 @@ export default class extends Controller {
       this.adjustDirection()
     }
   }
-
+  hide(event) {
+    if (!this.element.contains(event.target)) {
+      this.menuTarget.classList.add('hidden')
+    }
+  }
   adjustDirection() {
     const rect = this.element.getBoundingClientRect()
     const viewportHeight = window.innerHeight

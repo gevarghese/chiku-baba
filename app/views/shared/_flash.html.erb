@@ -1,5 +1,8 @@
 <% if flash.any? %>
-  <div data-controller="flash" class="fixed top-20 right-4 z-50 space-y-2">
+<div data-controller="flash" class="fixed top-20 inset-x-0 flex justify-center z-50">
+  <div class="space-y-2">
+    <!-- Your content here -->
+
     <% flash.each do |type, message| %>
       <% 
         alert_classes = case type
@@ -47,3 +50,5 @@
     <% end %>
   </div>
 <% end %>
+  </div>
+</div>

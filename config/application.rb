@@ -23,5 +23,43 @@ module ChikuBaba
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # Load environment-specific .env file
+    Dotenv::Rails.load(".#{Rails.env}.env") if File.exist?(".#{Rails.env}.env")
+    
+    # Also load the main .env for shared variables
+    Dotenv::Rails.load if File.exist?('.env')    
+
+
+
+    # Don't care if the mailer can't send.
+    #config.action_mailer.raise_delivery_errors = false
+
+    # Make template changes take effect immediately.
+    config.action_mailer.perform_caching = false
+    
+
+  # Configure Action Mailer to use SMTP
+    config.action_mailer.delivery_method = :smtp
+    
+    # Set up SMTP settings for Zoho
+    config.action_mailer.smtp_settings = {
+      address:              'smtp.zoho.in',
+      port:                 465,
+      domain:               ENV['ZOHO_DOMAIN'],
+      user_name:            ENV['ZOHO_EMAIL'],
+      password:             ENV['ZOHO_PASSWORD'],
+      authentication:       :plain,
+      enable_starttls_auto: true,
+      tls:                  true # Set to false if using port 465 with SSL
+    }
+      
+    
+    
+    # Ensure emails are delivered
+    config.action_mailer.perform_deliveries = true
+    
+    # Raise delivery errors for debugging
+    config.action_mailer.raise_delivery_errors = true  
   end
 end
