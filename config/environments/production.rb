@@ -89,11 +89,21 @@ Rails.application.configure do
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
 
-  # prodeuction make ssl enable
+  # Force all access to SSL
   config.force_ssl = true
 
+  # Correct host + protocol for URL generation
+  config.action_mailer.default_url_options = { host: "www.chiku-baba.space", protocol: "https" }
+  config.action_controller.default_url_options = { host: "www.chiku-baba.space", protocol: "https" }
 
-  # Set localhost to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "chiku-baba.space", port: 80 }
+  # Allow requests from your domains
+  config.hosts << "www.chiku-baba.space"
+  config.hosts << "chiku-baba.space"
+
+  # Fix CSRF / Origin mismatch issues (Rails 7+ strict check)
+  config.action_controller.allowed_request_origins = [
+    "https://www.chiku-baba.space",
+    "https://chiku-baba.space"
+  ]
 
 end
