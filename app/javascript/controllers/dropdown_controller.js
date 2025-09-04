@@ -1,41 +1,72 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["menu"]
+  static targets = ["menu", "icon"]
 
   connect() {
-    document.addEventListener('click', this.hide.bind(this))
+    this.isOpen = false
+    this.boundClickOutside = this.clickOutside.bind(this)
+    this.boundKeydown = this.keydown.bind(this)
+  }
+
+  toggle() {
+    this.isOpen ? this.close() : this.open()
+  }
+
+  open() {
+    this.menuTarget.classList.remove("hidden", "opacity-0", "scale-95")
+    this.menuTarget.classList.add("opacity-100", "scale-100")
+
+    this.menuTarget.classList.add(
+      "transition",
+      "ease-out",
+      "duration-150",
+      "transform",
+      "origin-top"
+    )
+
+    if (this.hasIconTarget) {
+      this.iconTarget.classList.add("rotate-180")
+    }
+
+    this.isOpen = true
+    document.addEventListener("click", this.boundClickOutside)
+    document.addEventListener("keydown", this.boundKeydown)
+  }
+
+  close() {
+    this.menuTarget.classList.add("opacity-0", "scale-95")
+    this.menuTarget.classList.remove("opacity-100", "scale-100")
+
+    if (this.hasIconTarget) {
+      this.iconTarget.classList.remove("rotate-180")
+    }
+
+    setTimeout(() => {
+      if (!this.isOpen) {
+        this.menuTarget.classList.add("hidden")
+      }
+    }, 150)
+
+    this.isOpen = false
+    document.removeEventListener("click", this.boundClickOutside)
+    document.removeEventListener("keydown", this.boundKeydown)
+  }
+
+  clickOutside(event) {
+    if (!this.element.contains(event.target)) {
+      this.close()
+    }
+  }
+
+  keydown(event) {
+    if (event.key === "Escape") {
+      this.close()
+    }
   }
 
   disconnect() {
-    document.removeEventListener('click', this.hide.bind(this))
-  }
-  toggle() {
-    // toggle visibility
-    this.menuTarget.classList.toggle("hidden")
-
-    if (!this.menuTarget.classList.contains("hidden")) {
-      this.adjustDirection()
-    }
-  }
-  hide(event) {
-    if (!this.element.contains(event.target)) {
-      this.menuTarget.classList.add('hidden')
-    }
-  }
-  adjustDirection() {
-    const rect = this.element.getBoundingClientRect()
-    const viewportHeight = window.innerHeight
-
-    // if not enough space below, open upward
-    if (rect.bottom + this.menuTarget.offsetHeight > viewportHeight) {
-      this.menuTarget.classList.add("bottom-full", "mb-2")
-      this.menuTarget.classList.remove("top-full", "mt-2")
-    } 
-    // else open downward
-    else {
-      this.menuTarget.classList.add("top-full", "mt-2")
-      this.menuTarget.classList.remove("bottom-full", "mb-2")
-    }
+    document.removeEventListener("click", this.boundClickOutside)
+    document.removeEventListener("keydown", this.boundKeydown)
   }
 }

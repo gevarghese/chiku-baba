@@ -1,4 +1,3 @@
-// app/javascript/controllers/mobile_menu_controller.js
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
@@ -6,74 +5,61 @@ export default class extends Controller {
 
   connect() {
     this.isOpen = false
+    this.boundClickOutside = this.clickOutside.bind(this)
+    this.boundKeydown = this.keydown.bind(this)
   }
 
   toggle() {
-    this.isOpen = !this.isOpen
-    
-    if (this.isOpen) {
-      this.open()
-    } else {
-      this.close()
-    }
+    this.isOpen ? this.close() : this.open()
   }
 
   open() {
-    this.menuTarget.classList.remove('hidden')
-    this.menuTarget.classList.add('animate-fadeIn')
-    
-    this.openIconTargets.forEach(icon => {
-      icon.classList.remove('hidden')
-      icon.classList.add('block')
-    })
-    
-    this.closedIconTargets.forEach(icon => {
-      icon.classList.remove('block')
-      icon.classList.add('hidden')
-    })
-    
-    // Prevent body scroll when menu is open
-    document.body.style.overflow = 'hidden'
-    
-    this.dispatch("opened")
+    this.menuTarget.classList.remove("hidden", "translate-x-full", "opacity-0")
+    this.menuTarget.classList.add("translate-x-0", "opacity-100")
+
+    this.openIconTarget.classList.remove("hidden")
+    this.closedIconTarget.classList.add("hidden")
+
+    document.body.style.overflow = "hidden"
+    this.isOpen = true
+
+    document.addEventListener("click", this.boundClickOutside)
+    document.addEventListener("keydown", this.boundKeydown)
   }
 
   close() {
-    this.menuTarget.classList.add('hidden')
-    this.menuTarget.classList.remove('animate-fadeIn')
-    
-    this.openIconTargets.forEach(icon => {
-      icon.classList.remove('block')
-      icon.classList.add('hidden')
-    })
-    
-    this.closedIconTargets.forEach(icon => {
-      icon.classList.remove('hidden')
-      icon.classList.add('block')
-    })
-    
-    // Restore body scroll
-    document.body.style.overflow = ''
-    
-    this.dispatch("closed")
+    this.menuTarget.classList.add("translate-x-full", "opacity-0")
+    this.menuTarget.classList.remove("translate-x-0", "opacity-100")
+
+    setTimeout(() => {
+      if (!this.isOpen) this.menuTarget.classList.add("hidden")
+    }, 300) // match transition duration
+
+    this.openIconTarget.classList.add("hidden")
+    this.closedIconTarget.classList.remove("hidden")
+
+    document.body.style.overflow = ""
+    this.isOpen = false
+
+    document.removeEventListener("click", this.boundClickOutside)
+    document.removeEventListener("keydown", this.boundKeydown)
   }
 
-  // Close menu when clicking outside (optional)
   clickOutside(event) {
     if (this.isOpen && !this.element.contains(event.target)) {
       this.close()
     }
   }
 
-  // Close menu on escape key
   keydown(event) {
-    if (this.isOpen && event.key === 'Escape') {
+    if (this.isOpen && event.key === "Escape") {
       this.close()
     }
   }
 
   disconnect() {
-    // Clean up body overflow when controller is disconnected
-    document.body.style.overflow = ''
+    document.body.style.overflow = ""
+    document.removeEventListener("click", this.boundClickOutside)
+    document.removeEventListener("keydown", this.boundKeydown)
   }
 }
