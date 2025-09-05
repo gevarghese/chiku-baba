@@ -1,0 +1,148 @@
+<!-- app/views/blogs/index.html.erb -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <div class="text-center mb-16">
+    <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-4 animate-fade-in">
+      <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">Our Blog</span>
+    </h1>
+    <p class="max-w-xl mx-auto text-xl text-gray-500 dark:text-gray-400 animate-slide-up">
+      Discover the latest insights, informations, and updates from our team.
+    </p>
+  </div>
+
+  <% if @featured_blogs.any? %>
+    <section class="mb-16 animate-fade-in">
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Featured Posts</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <% @featured_blogs.each do |blog| %>
+          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105">
+            <% if blog.featured_image.attached? %>
+              <%= image_tag blog.featured_image.variant(resize_to_fill: [600, 400]), class: "w-full h-48 object-cover" %>
+            <% else %>
+              <div class="w-full h-48 bg-gradient-to-r from-blue-400 to-purple-500"></div>
+            <% end %>
+            <div class="p-6">
+              <div class="flex items-center mb-2">
+                <span class="text-xs font-semibold px-2 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                  <%= blog.category&.name || "Uncategorized" %>
+                </span>
+                <span class="ml-2 text-sm text-gray-500 dark:text-gray-400">
+                  <%= blog.published_at.strftime("%b %d, %Y") %>
+                </span>
+              </div>
+              <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+                <%= link_to blog.title, blog_path(blog), class: "hover:text-blue-600 dark:hover:text-blue-400 transition-colors" %>
+              </h3>
+              <p class="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
+                <%= strip_tags(blog.content.to_plain_text).truncate(120) %>
+              </p>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                  <% if blog.user.avatar.attached? %>
+                    <%= image_tag blog.user.avatar.variant(resize_to_fill: [40, 40]), class: "w-8 h-8 rounded-full mr-2" %>
+                  <% else %>
+                    <div class="w-8 h-8 rounded-full bg-gray-300 dark:bg-gray-600 mr-2 flex items-center justify-center">
+                      <span class="text-xs font-bold"><%= blog.user.first_name[0] %><%= blog.user.last_name[0] %></span>
+                    </div>
+                  <% end %>
+                  <span class="text-sm text-gray-600 dark:text-gray-400"><%= blog.user.full_name %></span>
+                </div>
+                <span class="text-sm text-gray-500 dark:text-gray-400"><%= blog.reading_time %> min read</span>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  <% end %>
+
+  <section class="animate-fade-in delay-300">
+ <!-- First row: Title and New Blog button -->
+<div class="flex justify-between items-center mb-4">
+  <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Latest Posts</h2>
+  <% if user_signed_in? %>
+    <%= link_to new_blog_path, class: "flex items-center bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors shrink-0" do %>
+      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+      </svg>
+      New Blog
+    <% end %>
+  <% end %>
+</div>
+
+<!-- Categories that wrap to multiple rows on mobile -->
+<div class="flex flex-wrap gap-2 mb-6">
+  <% @categories.each do |category| %>
+    <%= link_to category.name, category_path(category), 
+               class: "text-sm px-4 py-2 rounded-full bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200 hover:bg-blue-100 hover:text-blue-800 dark:hover:bg-blue-900 dark:hover:text-blue-200 transition-colors whitespace-nowrap inline-flex items-center justify-center" %>
+  <% end %>
+</div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <% @blogs.each do |blog| %>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden transition-all duration-300 hover:shadow-lg hover:translate-y-[-4px]" 
+             data-controller="blog-card"
+             data-action="mouseenter->blog-card#animateIn mouseleave->blog-card#animateOut">
+          <% if blog.featured_image.attached? %>
+            <%= image_tag blog.featured_image.variant(resize_to_fill: [600, 300]), class: "w-full h-40 object-cover" %>
+          <% else %>
+            <div class="w-full h-40 bg-gradient-to-r from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-600"></div>
+          <% end %>
+          <div class="p-5">
+            <div class="flex items-center mb-2">
+              <span class="text-xs font-semibold px-2 py-1 rounded-full bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200">
+                <%= blog.category&.name || "Uncategorized" %>
+              </span>
+              <span class="ml-2 text-xs text-gray-500 dark:text-gray-400">
+                <%= blog.published_at.strftime("%b %d, %Y") %>
+              </span>
+            </div>
+            <h3 class="text-lg font-bold mb-2 text-gray-900 dark:text-white">
+              <%= link_to blog.title, blog_path(blog), class: "hover:text-blue-600 dark:hover:text-blue-400 transition-colors" %>
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-300 mb-3 line-clamp-3">
+              <%= strip_tags(blog.content.to_plain_text).truncate(100) %>
+            </p>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center">
+                <% if blog.user.avatar.attached? %>
+                  <%= image_tag blog.user.avatar.variant(resize_to_fill: [30, 30]), class: "w-6 h-6 rounded-full mr-2" %>
+                <% else %>
+                  <div class="w-6 h-6 rounded-full bg-gray-300 dark:bg-gray-600 mr-2 flex items-center justify-center">
+                    <span class="text-xs"><%= blog.user.first_name[0] %></span>
+                  </div>
+                <% end %>
+                <span class="text-xs text-gray-600 dark:text-gray-400"><%= blog.user.full_name %></span>
+              </div>
+              <div class="flex items-center text-xs text-gray-500 dark:text-gray-400">
+                <span class="flex items-center mr-3">
+                  <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                  </svg>
+                  <%= blog.view_count || 0 %>
+                </span>
+                <span><%= blog.reading_time %> min read</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </section>
+</div>
+
+<%= javascript_tag do %>
+  document.addEventListener('turbo:load', function() {
+    const animateElements = document.querySelectorAll('.animate-fade-in, .animate-slide-up');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    animateElements.forEach(el => observer.observe(el));
+  });
+<% end %>

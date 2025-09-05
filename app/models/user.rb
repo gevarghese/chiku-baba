@@ -1,5 +1,7 @@
 # app/models/user.rb
 class User < ApplicationRecord
+  has_many :blogs, dependent: :destroy
+  has_many :comments, dependent: :destroy
   # Define roles as an enum
    enum :role, { user: 0, admin: 1, moderator: 2 }, default: :user
   

@@ -79,3 +79,7 @@ gem "pundit", "~> 2.5"
 gem "letter_opener", "~> 1.10"
 
 gem "draper", "~> 4.0"
+
+gem "friendly_id", "~> 5.5"
+
+gem "kaminari", "~> 1.2"

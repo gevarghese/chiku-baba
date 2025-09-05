@@ -1,0 +1,133 @@
+<!-- app/views/blogs/show.html.erb -->
+<article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <div class="mb-8 animate-fade-in">
+    <div class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400 mb-4">
+      <%= link_to "Home", root_path, class: "hover:text-blue-600 dark:hover:text-blue-400" %>
+      <span>/</span>
+      <%= link_to "Blog", blogs_path, class: "hover:text-blue-600 dark:hover:text-blue-400" %>
+      <span>/</span>
+      <% if @blog.category %>
+        <%= link_to @blog.category.name, category_path(@blog.category), class: "hover:text-blue-600 dark:hover:text-blue-400" %>
+        <span>/</span>
+      <% end %>
+      <span class="text-gray-700 dark:text-gray-300"><%= @blog.title.truncate(30) %></span>
+    </div>
+
+    <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 dark:text-white mb-4 leading-tight">
+      <%= @blog.title %>
+    </h1>
+
+    <div class="flex flex-wrap items-center justify-between mb-6">
+      <div class="flex items-center mb-2 md:mb-0">
+        <% if @blog.user.avatar.attached? %>
+          <%= image_tag @blog.user.avatar.variant(resize_to_fill: [50, 50]), class: "w-10 h-10 rounded-full mr-3" %>
+        <% else %>
+          <div class="w-10 h-10 rounded-full bg-gray-300 dark:bg-gray-600 mr-3 flex items-center justify-center">
+            <span class="font-bold"><%= @blog.user.first_name[0] %><%= @blog.user.last_name[0] %></span>
+          </div>
+        <% end %>
+        <div>
+          <div class="font-medium text-gray-900 dark:text-white"><%= @blog.user.full_name %></div>
+          <div class="text-sm text-gray-500 dark:text-gray-400">
+            Published <%= @blog.published_at.strftime("%b %d, %Y") %> • <%= @blog.reading_time %> min read
+          </div>
+        </div>
+      </div>
+
+      <div class="flex space-x-3">
+        <div class="flex items-center text-gray-500 dark:text-gray-400" id="blog_<%= @blog.id %>_views" data-blog-target="viewCount">
+          <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+          </svg>
+          <%= @blog.view_count || 0 %> views
+        </div>
+        
+        <div class="flex items-center text-gray-500 dark:text-gray-400">
+          <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
+          </svg>
+          <%= @blog.comments.count %> comments
+        </div>
+        
+        <% if policy(@blog).edit? %>
+          <div class="flex space-x-2">
+            <%= link_to edit_blog_path(@blog), class: "text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300" do %>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+              </svg>
+            <% end %>
+            
+            <%= button_to blog_path(@blog), method: :delete, class: "text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300", data: { turbo_confirm: "Are you sure?" } do %>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+              </svg>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <% if @blog.featured_image.attached? %>
+      <div class="mb-8 rounded-xl overflow-hidden shadow-lg animate-fade-in">
+        <%= image_tag @blog.featured_image.variant(resize_to_limit: [1200, 800]), class: "w-full h-auto" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="prose prose-lg dark:prose-invert max-w-none mb-12 animate-fade-in delay-300">
+    <%= @blog.content %>
+  </div>
+
+  <div class="border-t border-gray-200 dark:border-gray-700 pt-8 mt-8 animate-fade-in delay-500">
+    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Comments (<%= @blog.comments.count %>)</h3>
+    
+    <div id="comments" class="space-y-6 mb-8">
+      <% if @comments.any? %>
+        <%= render partial: "comments/comment", collection: @comments %>
+      <% else %>
+        <p class="text-gray-500 dark:text-gray-400 italic">No comments yet. Be the first to share your thoughts!</p>
+      <% end %>
+    </div>
+
+    <% if user_signed_in? %>
+      <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 animate-fade-in delay-700">
+        <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Leave a comment</h4>
+        
+        <%= form_with(model: [@blog, @comment], class: "space-y-4", data: { controller: "comment-form", action: "turbo:submit-end->comment-form#reset" }) do |f| %>
+          <div>
+            <%= f.text_area :body, rows: 4, class: "w-full px-3 py-2 text-gray-700 dark:text-gray-300 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600", placeholder: "Share your thoughts...", required: true %>
+          </div>
+          
+          <%= f.hidden_field :parent_id %>
+          
+          <div class="flex justify-end">
+            <%= f.submit "Post Comment", class: "px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors" %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 text-center animate-fade-in delay-700">
+        <p class="text-gray-600 dark:text-gray-300 mb-4">Please sign in to leave a comment.</p>
+        <%= link_to "Sign In", new_user_session_path, class: "inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors" %>
+      </div>
+    <% end %>
+  </div>
+</article>
+
+<%= javascript_tag do %>
+  document.addEventListener('turbo:load', function() {
+    const animateElements = document.querySelectorAll('.animate-fade-in');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    animateElements.forEach(el => observer.observe(el));
+  });
+<% end %>

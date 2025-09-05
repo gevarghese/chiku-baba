@@ -14,6 +14,12 @@ Rails.application.routes.draw do
   
   # Regular user routes
   resources :users, only: [:show, :edit, :update]
+  
+  # Blog system routes
+  resources :blogs do
+    resources :comments, only: [:create, :update, :destroy], param: :slug
+  end
+  resources :categories, param: :slug
 
   scope :pages, controller: :pages do
     get 'faq', as: :faq_page

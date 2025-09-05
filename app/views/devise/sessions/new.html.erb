@@ -9,7 +9,7 @@
                  as: resource_name,
                  url: session_path(resource_name),
                  html: {
-                         class: "bg-white mb-4 px-8 pt-6 pb-8 rounded shadow-md"
+                         class: "bg-white dark:bg-gray-800 mb-4 px-8 pt-6 pb-8 rounded shadow-md"
                  }
         ) do |f| %>
 
@@ -26,17 +26,17 @@
         <% end %>
 
         <div class="mb-4">
-            <%= f.label :email, class: "block text-gray-700 text-sm font-bold mb-2" %>
+            <%= f.label :email, class: "block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" %>
             <%= f.email_field :email, autofocus: true, autocomplete: "email",
-                              class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight foucs:outline-none focus:shadow-outline"
+                              class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 dark:bg-gray-700 dark:border-gray-600 leading-tight foucs:outline-none focus:shadow-outline"
             %>
         </div>
 
         <div class="mb-4">
-            <%= f.label :password, class: "block text-gray-700 text-sm font-bold mb-2" %>
+            <%= f.label :password, class: "block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" %>
             <%= f.password_field :password,
                                  autocomplete: "current-password",
-                                 class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                 class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 dark:bg-gray-700 dark:border-gray-600 leading-tight focus:outline-none focus:shadow-outline"
             %>
         </div>
 
@@ -44,7 +44,7 @@
             <div class="mb-4">
                 <%= f.check_box :remember_me, class: "mr-2 leading-tight" %>
                 <%= f.label :remember_me,
-                            class: "align-baseline inline-block text-gray-700 text-sm"
+                            class: "align-baseline inline-block text-gray-700 dark:text-gray-300 text-sm"
                 %>
             </div>
         <% end %>
