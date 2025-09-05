@@ -60,6 +60,12 @@ class Blog < ApplicationRecord
     comments.root_comments.recent
   end
   
+# For Avo compatibility with friendly_id
+  def should_generate_new_friendly_id?
+    slug.blank? || title_changed?
+  end
+  
+
   private
   
   def generate_slug

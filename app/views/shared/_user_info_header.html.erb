@@ -22,8 +22,8 @@
           Edit Profile
         <% end %>
 
-        <% if current_user.admin? %>
-          <%= link_to admin_users_path, class: "block px-3 py-1.5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200" do %>
+        <% if current_user.admin %>
+          <%= link_to avo_path, class: "block px-3 py-1.5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200" do %>
             Admin Dashboard
           <% end %>
         <% end %>
