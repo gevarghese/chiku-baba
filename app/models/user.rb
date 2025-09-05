@@ -1,5 +1,6 @@
 # app/models/user.rb
 class User < ApplicationRecord
+  has_one_attached :avatar
   has_many :blogs, dependent: :destroy
   has_many :comments, dependent: :destroy
   # Define roles as an enum

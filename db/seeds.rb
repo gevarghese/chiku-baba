@@ -38,3 +38,38 @@ end
 
 puts "✅ Seeded #{Category.count} categories with slugs."
 
+
+
+puts "Creating statuses..."
+
+statuses_data = [
+  {
+    name: "Draft",
+    slug: "draft",
+    value: 0,
+    description: "Post is still in progress and not visible to public",
+    active: true
+  },
+  {
+    name: "Published",
+    slug: "published", 
+    value: 1,
+    description: "Post is live and visible to public",
+    active: true
+  },
+  {
+    name: "Archived",
+    slug: "archived",
+    value: 2,
+    description: "Post is no longer active but kept for historical reference",
+    active: true
+  }
+]
+
+statuses_data.each do |status_data|
+  Status.create!(status_data)
+  puts "Created status: #{status_data[:name]} (value: #{status_data[:value]})"
+end
+
+puts "Statuses created successfully!"
+

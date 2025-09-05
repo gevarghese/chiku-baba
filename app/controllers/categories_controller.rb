@@ -10,14 +10,22 @@ class CategoriesController < ApplicationController
 
 def show
   @category = Category.find_by!(slug: params[:slug])
+  puts "Category found: #{@category.name}"
+  puts "Category ID: #{@category.id}"
   
-  # Fix the query - make sure it returns a relation, not nil
-  @blogs = @category.blogs.published.recent.page(params[:page]).per(10)
+  # Check if there are any blogs in this category
+  all_blogs = @category.blogs
+  puts "Total blogs in category: #{all_blogs.count}"
+  puts "Blog titles: #{all_blogs.map(&:title)}"
   
-  # Add debug output to check what's happening
-  Rails.logger.debug "Category: #{@category.inspect}"
-  Rails.logger.debug "Blogs count: #{@blogs.total_count}"
-  Rails.logger.debug "Blogs class: #{@blogs.class}"
+  # Check published blogs
+  published_blogs = @category.blogs.published
+  puts "Published blogs count: #{published_blogs.count}"
+  puts "Published blogs: #{published_blogs.map(&:title)}"
+  
+  @blogs = published_blogs.recent.page(params[:page]).per(10)
+  puts "Paginated blogs: #{@blogs.count}"
+  puts "Blogs object: #{@blogs.inspect}"
 end
 
   def new

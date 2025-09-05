@@ -83,3 +83,5 @@ gem "draper", "~> 4.0"
 gem "friendly_id", "~> 5.5"
 
 gem "kaminari", "~> 1.2"
+
+gem "kaminari-tailwind", "~> 0.1.0"

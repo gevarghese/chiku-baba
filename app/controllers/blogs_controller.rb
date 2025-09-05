@@ -1,26 +1,28 @@
-# app/controllers/blogs_controller.rb
 class BlogsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!
   before_action :set_blog, only: [:show, :edit, :update, :destroy]
   before_action :authorize_blog, except: [:index, :new, :create]
 
   def index
     @blogs = policy_scope(Blog).published.includes(:user, :category).recent
-    @featured_blogs = Blog.featured.limit(3)
+    @featured_blogs = Blog.featured.published.limit(3)
     @categories = Category.all
   end
 
 def show
+  # Set @blog FIRST before using it
+  @blog = Blog.friendly.find(params[:id])
+  
+  # Now you can use @blog
   @comment = Comment.new
   @comments = @blog.comments.root_comments.includes(:user, :replies)
-  @blog = Blog.friendly.find(params[:slug])
 
   # Unique view tracking with Solid Cache (per session, expires in 24h)
   cache_key = "blog:#{@blog.id}:viewer:#{session.id}"
 
-  unless SolidCache.read(cache_key)
+  unless Rails.cache.read(cache_key)
     @blog.increment!(:view_count)
-    SolidCache.write(cache_key, true, expires_in: 24.hours)
+    Rails.cache.write(cache_key, true, expires_in: 24.hours)
 
     # Turbo Stream update (only when incremented)
     Turbo::StreamsChannel.broadcast_replace_to(
@@ -31,7 +33,6 @@ def show
     )
   end
 end
-
 
 
   def new
@@ -51,6 +52,8 @@ end
         format.html { redirect_to blog_url(@blog), notice: "Blog was successfully created." }
         format.json { render :show, status: :created, location: @blog }
       else
+        # This will output the errors to your server console
+        Rails.logger.debug "Blog save failed with errors: #{@blog.errors.full_messages.join(', ')}"
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @blog.errors, status: :unprocessable_entity }
       end
@@ -58,6 +61,7 @@ end
   end
 
   def update
+    # Corrected the method name from `respond to` to `respond_to`
     respond_to do |format|
       if @blog.update(blog_params)
         format.html { redirect_to blog_url(@blog), notice: "Blog was successfully updated." }
@@ -80,7 +84,7 @@ end
 
   private
     def set_blog
-      @blog = Blog.find_by!(slug: params[:id])
+      @blog = Blog.friendly.find(params[:id])
     end
 
     def authorize_blog
@@ -88,6 +92,7 @@ end
     end
 
     def blog_params
-      params.require(:blog).permit(:title, :content, :published_at, :featured, :category_id, :featured_image,:status)
+      # Correctly permit :content, as this is the parameter sent by form.rich_text_area
+      params.require(:blog).permit(:title, :content, :published_at, :featured, :category_id, :featured_image,:status_id)
     end
 end

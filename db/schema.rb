@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_05_034124) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_05_095414) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -56,16 +56,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_05_034124) do
     t.bigint "category_id", null: false
     t.bigint "user_id", null: false
     t.string "title", null: false
-    t.text "content", null: false
     t.string "slug", null: false
     t.datetime "published_at"
     t.boolean "featured", default: false
-    t.integer "status", default: 0
+    t.bigint "status_id", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "view_count", default: 0
     t.index ["category_id"], name: "index_blogs_on_category_id"
     t.index ["slug"], name: "index_blogs_on_slug", unique: true
+    t.index ["status_id"], name: "index_blogs_on_status_id"
     t.index ["user_id"], name: "index_blogs_on_user_id"
   end
 
@@ -102,6 +102,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_05_034124) do
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
   end
 
+  create_table "statuses", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "slug", null: false
+    t.integer "value", null: false
+    t.text "description"
+    t.boolean "active", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_statuses_on_name", unique: true
+    t.index ["slug"], name: "index_statuses_on_slug", unique: true
+    t.index ["value"], name: "index_statuses_on_value", unique: true
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -132,6 +145,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_05_034124) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "blogs", "categories"
+  add_foreign_key "blogs", "statuses"
   add_foreign_key "blogs", "users"
   add_foreign_key "comments", "blogs"
   add_foreign_key "comments", "comments", column: "parent_id"

@@ -8,7 +8,7 @@ class CreateBlogs < ActiveRecord::Migration[8.0]
       t.string :slug, null: false
       t.datetime :published_at
       t.boolean :featured, default: false
-      t.integer :status, default: 0
+      t.references :status, foreign_key: true, null: false, default: 1
 
       t.timestamps
     end

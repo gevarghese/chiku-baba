@@ -5,24 +5,38 @@ class Blog < ApplicationRecord
   belongs_to :user
   belongs_to :category, optional: true
   has_many :comments, dependent: :destroy
+  # This is the correct way to validate Action Text content
+  has_rich_text :content
+  validates :content, presence: true
+    # Add this line for avatar attachment
+  has_one_attached :avatar
   
-  # Define status as an enum
-  enum :status, { draft: 0, published: 1, archived: 2 }, default: :draft
-  
+  belongs_to :status
+  validates :status, presence: true
+  # Scopes - use the class methods from Status model
+
+  scope :published, -> { 
+    where(status_id: Status.published_id)
+    .where('published_at IS NOT NULL AND published_at <= ?', Time.current) 
+  }
+
+  scope :draft, -> { where(status_id: Status.draft_id) }
+  scope :archived, -> { where(status_id: Status.archived_id) }
+  scope :recent, -> { order(published_at: :desc) }
+  scope :featured, -> { where(featured: true) }
+
+  # Combined scopes (examples)
+  scope :featured_published, -> { featured.published }
+  scope :recent_published, -> { published.recent }
+  scope :featured_recent, -> { featured.published.recent }
+
   validates :title, presence: true
   validates :content, presence: true
-  validates :slug, presence: true, uniqueness: true
+  validates :slug, presence: true, uniqueness: { on: :create }
   
   before_validation :generate_slug, if: -> { slug.blank? && title.present? }
   
-  scope :published, -> { 
-  where(status: :published)
-  .where('published_at IS NOT NULL AND published_at <= ?', Time.current) 
-   }
-  scope :draft, -> { where(status: :draft) }
-  scope :archived, -> { where(status: :archived) }
-  scope :recent, -> { order(published_at: :desc) }
-  scope :featured, -> { where(featured: true) }
+
   
   def published?
     status == 'published' && published_at.present? && published_at <= Time.current

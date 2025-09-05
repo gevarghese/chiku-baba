@@ -1,0 +1,26 @@
+<%= turbo_stream.prepend "comments" do %>
+  <%= render 'comments/comment', comment: @comment %>
+<% end %>
+
+<%= turbo_stream.replace "comment-form" do %>
+  <%= form_with model: [@blog, @blog.comments.build], 
+      id: "comment-form",
+      data: { turbo: true },
+      class: "bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-gray-700" do |form| %>
+    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Leave a Comment</h3>
+    
+    <%= form.text_area :body, 
+        placeholder: "Share your thoughts...",
+        class: "w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white resize-none",
+        rows: 4 %>
+    
+    <div class="flex justify-end mt-4">
+      <%= form.submit "Post Comment", 
+          class: "px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:bg-blue-700 dark:hover:bg-blue-800 transition-colors" %>
+    </div>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.update "comment-count" do %>
+  <%= @blog.comments.count %>
+<% end %>
