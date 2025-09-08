@@ -1,7 +1,7 @@
 class BlogsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_blog, only: [:show, :edit, :update, :destroy]
-  before_action :authorize_blog, except: [:index, :new, :create]
+  before_action :authorize_blog, except: [:index, :new, :create, :my_blogs]
 
   def index
     @blogs = policy_scope(Blog).published.includes(:user, :category).recent
@@ -38,6 +38,13 @@ end
   def new
     @blog = current_user.blogs.new
     authorize @blog
+  end
+
+  def my_blogs
+    @blogs = current_user.blogs.includes(:category, :status)
+    @draft_blogs = @blogs.draft.order(updated_at: :desc)
+    @published_blogs = @blogs.published.order(published_at: :desc)
+    @archived_blogs = @blogs.archived.order(updated_at: :desc)
   end
 
   def edit

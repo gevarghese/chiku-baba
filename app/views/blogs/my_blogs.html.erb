@@ -1,0 +1,62 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <!-- Header -->
+  <div class="mb-8">
+    <div class="flex justify-between items-center">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">My Blog Posts</h1>
+        <p class="text-gray-600 dark:text-gray-400 mt-2">Manage your published and draft blog posts</p>
+      </div>
+      <%= link_to "Write New Blog", new_blog_path, 
+          class: "inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors" %>
+    </div>
+    
+    <!-- Stats -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8">
+      <%= render 'stats_card',
+          label: 'Draft Posts',
+          count: @draft_blogs.count,
+          bg_color: 'bg-yellow-100 dark:bg-yellow-900',
+          icon_color: 'text-yellow-600 dark:text-yellow-400',
+          icon_path: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>' %>
+      
+      <%= render 'stats_card',
+          label: 'Published Posts',
+          count: @published_blogs.count,
+          bg_color: 'bg-green-100 dark:bg-green-900',
+          icon_color: 'text-green-600 dark:text-green-400',
+          icon_path: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>' %>
+      
+      <%= render 'stats_card',
+          label: 'Total Posts',
+          count: @blogs.count,
+          bg_color: 'bg-gray-100 dark:bg-gray-700',
+          icon_color: 'text-gray-600 dark:text-gray-400',
+          icon_path: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>' %>
+      
+      <%= render 'stats_card',
+          label: 'Archived Posts',
+          count: @archived_blogs.count,
+          bg_color: 'bg-orange-100 dark:bg-orange-900',
+          icon_color: 'text-orange-600 dark:text-orange-400',
+          icon_path: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>' %>
+    </div>
+  </div>
+
+  <!-- Draft Blog Posts -->
+  <%= render 'blog_section', 
+      blogs: @draft_blogs, 
+      section_title: 'Draft Posts', 
+      status: 'draft' %>
+
+  <!-- Published Blog Posts -->
+  <%= render 'blog_section', 
+      blogs: @published_blogs, 
+      section_title: 'Published Posts', 
+      status: 'published' %>
+
+  <!-- Archived Blog Posts -->
+  <%= render 'blog_section', 
+      blogs: @archived_blogs, 
+      section_title: 'Archived Posts', 
+      status: 'archived' %>
+</div>

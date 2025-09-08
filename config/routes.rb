@@ -18,6 +18,9 @@ Rails.application.routes.draw do
   
   # Blog system routes
   resources :blogs do
+    collection do
+      get :my_blogs
+    end
     resources :comments, only: [:create, :update, :destroy], param: :slug
   end
   resources :categories, param: :slug

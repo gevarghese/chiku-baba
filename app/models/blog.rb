@@ -39,15 +39,15 @@ class Blog < ApplicationRecord
 
   
   def published?
-    status == 'published' && published_at.present? && published_at <= Time.current
+    status&.slug == 'published' && published_at.present? && published_at <= Time.current
   end
   
   def draft?
-    status == 'draft'
+    status&.slug == 'draft'
   end
   
   def archived?
-    status == 'archived'
+    status&.slug == 'archived'
   end
   
   def reading_time

@@ -8,10 +8,30 @@
     📦 Products
   <% end %>
 
-  <!-- Blog nested under Products -->
-  <%= link_to blogs_path, class: "block ml-6 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200" do %>
-    📝 Blog
+  <!-- All Products nested under Products -->
+  <%= link_to "#", class: "block ml-6 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200" do %>
+    📦 All Products
   <% end %>
+
+  <!-- Blog section nested under Products -->
+  <div class="ml-6">
+    <div class="text-gray-600 dark:text-gray-400 px-3 py-2 text-sm font-medium">
+      📝 Blog
+    </div>
+    
+    <!-- Blog submenu -->
+    <div class="ml-4 space-y-1">
+      <%= link_to blogs_path, class: "block text-gray-500 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-2 rounded-lg text-sm transition-colors duration-200 #{'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' if current_page?(blogs_path)}" do %>
+        📰 Published Blogs
+      <% end %>
+      
+      <% if user_signed_in? %>
+        <%= link_to my_blogs_blogs_path, class: "block text-gray-500 dark:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-2 rounded-lg text-sm transition-colors duration-200 #{'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' if current_page?(my_blogs_blogs_path)}" do %>
+          📋 My Blogs
+        <% end %>
+      <% end %>
+    </div>
+  </div>
 </div>
 
 <%= link_to "#", class: "block text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 px-3 py-2 rounded-lg font-medium transition-colors duration-200" do %>

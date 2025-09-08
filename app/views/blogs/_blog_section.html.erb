@@ -1,0 +1,28 @@
+<% if blogs.any? %>
+  <div class="<%= 'mb-12' unless section_title.downcase.include?('archived') %>">
+    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6"><%= section_title %></h2>
+    <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-md">
+      <ul class="divide-y divide-gray-200 dark:divide-gray-700">
+        <% blogs.each do |blog| %>
+          <%= render 'blog_item', blog: blog, status: status %>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+<% else %>
+  <% if status == 'draft' %>
+    <div class="mb-12">
+      <div class="text-center py-12">
+        <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+          <path d="M34 40h10v-4a6 6 0 00-10.712-3.714M34 40H14m20 0v-4a9.971 9.971 0 00-.712-3.714M14 40H4v-4a6 6 0 0110.713-3.714M14 40v-4c0-1.313.253-2.566.713-3.714m0 0A10.003 10.003 0 0124 26c4.21 0 7.813 2.602 9.288 6.286M30 14a6 6 0 11-12 0 6 6 0 0112 0zm12 6a4 4 0 11-8 0 4 4 0 018 0zm-28 0a4 4 0 11-8 0 4 4 0 018 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white">No draft posts</h3>
+        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Start writing your first blog post</p>
+        <div class="mt-6">
+          <%= link_to "Write New Blog", new_blog_path, 
+              class: "inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>
