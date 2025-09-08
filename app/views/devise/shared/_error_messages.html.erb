@@ -1,28 +1,21 @@
 <% if resource.errors.any? %>
-<div id="error_explanation" data-turbo-cache="false" class="bg-gray-900 text-red-500 font-bold border-l-4 border-red-500 rounded-r-lg shadow-lg p-6 mb-8 backdrop-blur-sm">
-<!-- Header with icon -->
-<div class="flex items-start space-x-3 mb-4">
-<div class="flex-shrink-0">
-<div class="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center shadow-md">
-<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.966-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"/>
-</svg></div></div>
-<div class="flex-1">
-<h2 class="text-red-600 font-bold text-lg mb-1">
-Oops! Let's fix a few things</h2><p class="text-red-500 font-bold text-sm opacity-90"><%= I18n.t("errors.messages.not_saved", count: resource.errors.count, resource: resource.class.model_name.human.downcase) %>
-</p></div>
+<div class="fixed top-20 inset-x-0 flex justify-center z-50">
+  <div class="bg-red-100 border border-red-400 text-red-700 dark:bg-red-900/20 dark:border-red-600 dark:text-red-400 px-4 py-3 rounded-lg shadow-lg max-w-sm">
+    <div class="flex items-center space-x-2">
+      <div class="flex-shrink-0">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+        </svg>
+      </div>
+      <div class="flex-1">
+        <p class="text-sm font-medium mb-1">Oops! Please fix the following issues:</p>
+        <ul class="text-sm space-y-1">
+          <% resource.errors.full_messages.each do |message| %>
+            <li>• <%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
-<!-- Error list -->
-<ul class="space-y-3">
-<% resource.errors.full_messages.each do |message| %>
-  <li class="flex items-start space-x-2 bg-gray-800 text-red-500 font-bold backdrop-blur-sm rounded-lg p-3 shadow-sm border border-red-600">
-  <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-  </svg>
-  <span class="flex-1"><%= message %>
-  </span></li><% end %>
-  </ul><!-- Footer note -->
-  <div class="mt-4 pt-3 border-t border-red-700/50">
-  <p class="text-red-500 font-bold text-xs opacity-75">Please review the highlighted fields below</p>
-  </div></div>
-  <% end %>
+<% end %>
