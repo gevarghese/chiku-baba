@@ -1,48 +1,85 @@
 <!-- app/views/dashboard/index.html.erb -->
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-  <!-- Hero Section -->
-  <div class="text-center mb-16">
-    <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-4 animate-fade-in">
-      <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">Dashboard</span>
-    </h1>
-    <p class="max-w-xl mx-auto text-xl text-gray-500 dark:text-gray-400 animate-slide-up">
-      Welcome to your personal dashboard. Manage your content and track your activity.
-    </p>
-  </div>
-
-  <!-- Google Ads Section -->
-  <div class="mb-12">
-    <%= render 'shared/google_adds' %>
-  </div>
-
-  <!-- Dashboard Content -->
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-    <!-- Add your dashboard widgets here -->
-    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
-      <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-        Quick Stats
-      </h3>
-      <p class="text-gray-600 dark:text-gray-300">
-        Your activity overview and statistics
-      </p>
-    </div>
+<div class="w-full px-4 sm:px-6 py-12">
+  <!-- Full-width layout with side ads in vacant space -->
+  <div class="relative max-w-7xl mx-auto">
     
-    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
-      <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-        Recent Activity
-      </h3>
-      <p class="text-gray-600 dark:text-gray-300">
-        Latest updates and actions
-      </p>
+    <!-- Left Side Ad - Fixed in vacant space -->
+    <div class="hidden xl:block fixed left-4 top-1/2 transform -translate-y-1/2 w-40 z-10">
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-3">
+        <p class="text-xs text-gray-500 dark:text-gray-400 text-center mb-2">Advertisement</p>
+        <%= render 'shared/google_adds' %>
+      </div>
     </div>
-    
-    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
-      <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-        Quick Actions
-      </h3>
-      <p class="text-gray-600 dark:text-gray-300">
-        Common tasks and shortcuts
-      </p>
+
+    <!-- Right Side Ad - Fixed in vacant space -->
+    <div class="hidden xl:block fixed right-4 top-1/2 transform -translate-y-1/2 w-40 z-10">
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-3">
+        <p class="text-xs text-gray-500 dark:text-gray-400 text-center mb-2">Advertisement</p>
+        <%= render 'shared/google_adds' %>
+      </div>
     </div>
+
+    <!-- Main Content Container -->
+    <div class="max-w-5xl mx-auto">
+      <!-- Hero Section -->
+      <div class="text-center mb-16">
+        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-4 animate-fade-in">
+          <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">Dashboard</span>
+        </h1>
+        <p class="max-w-xl mx-auto text-xl text-gray-500 dark:text-gray-400 animate-slide-up">
+          Welcome to your personal dashboard. Manage your content and track your activity.
+        </p>
+      </div>
+
+      <!-- Mobile/Tablet Google Ads (visible only on smaller screens) -->
+      <div class="xl:hidden mb-8">
+        <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
+          <p class="text-xs text-gray-500 dark:text-gray-400 text-center mb-2">Advertisement</p>
+          <%= render 'shared/google_adds' %>
+        </div>
+      </div>
+
+      <!-- Dashboard Content -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Dashboard widgets -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+            Quick Stats
+          </h3>
+          <p class="text-gray-600 dark:text-gray-300">
+            Your activity overview and statistics
+          </p>
+        </div>
+        
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+            Recent Activity
+          </h3>
+          <p class="text-gray-600 dark:text-gray-300">
+            Latest updates and actions
+          </p>
+        </div>
+        
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+            Quick Actions
+          </h3>
+          <p class="text-gray-600 dark:text-gray-300">
+            Common tasks and shortcuts
+          </p>
+        </div>
+        
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+            Settings
+          </h3>
+          <p class="text-gray-600 dark:text-gray-300">
+            Manage your preferences and account
+          </p>
+        </div>
+      </div>
+
+    </div>
+
   </div>
 </div>
