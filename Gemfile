@@ -86,4 +86,4 @@ gem "kaminari", "~> 1.2"
 
 gem "kaminari-tailwind", "~> 0.1.0"
 
-gem "avo", "~> 3.24"
+gem "avo", "~> 3.25"
